@@ -1,0 +1,35 @@
+# docker-compose.yml
+services:
+  web:
+    build: .
+    image: rails81-app:dev
+    volumes:
+      - .:/app
+      - bundle-cache:/usr/local/bundle
+    ports:
+      - "3000:3000"
+    environment:
+      - RAILS_ENV=development
+      - RAILS_LOG_TO_STDOUT=true
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/app_development
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:16
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=app_development
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d app_development"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
+  bundle-cache:
