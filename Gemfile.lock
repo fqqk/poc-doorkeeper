@@ -96,6 +96,8 @@ GEM
     debug (1.11.0)
       irb (~> 1.10)
       reline (>= 0.3.8)
+    doorkeeper (5.8.2)
+      railties (>= 5)
     dotenv (3.1.8)
     drb (2.2.3)
     ed25519 (1.4.0)
@@ -335,6 +337,7 @@ DEPENDENCIES
   brakeman
   bundler-audit
   debug
+  doorkeeper
   kamal
   pg (~> 1.1)
   puma (>= 5.0)
