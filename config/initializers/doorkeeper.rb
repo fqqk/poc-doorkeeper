@@ -246,7 +246,7 @@ Doorkeeper.configure do
   optional_scopes :write
 
   # Require PKCE for public clients (non-confidential)
-  force_pkce
+  # force_pkce
 
   # Access token expiration
   access_token_expires_in 20.seconds
