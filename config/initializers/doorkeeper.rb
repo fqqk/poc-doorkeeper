@@ -7,11 +7,8 @@ Doorkeeper.configure do
 
   # This block will be called to check whether the resource owner is authenticated or not.
   resource_owner_authenticator do
-    raise "Please configure doorkeeper resource_owner_authenticator block located in #{__FILE__}"
-    # Put your resource owner authentication logic here.
-    # Example implementation:
-    #   User.find_by(id: session[:user_id]) || redirect_to(new_user_session_url)
-    User.first || User.create!(email: "test@example.com", name: "Test User")
+    # 開発用: 常にID=1のユーザーを返す（本番環境では適切な認証機能を実装してください）
+    User.first || User.create!(email: "demo@example.com", password: "password123")
   end
 
   # If you didn't skip applications controller from Doorkeeper routes in your application routes.rb
@@ -247,8 +244,17 @@ Doorkeeper.configure do
   #
   default_scopes  :read
   optional_scopes :write
-  use_pkce true
-  access_token_expires_in 10.seconds
+
+  # Require PKCE for public clients (non-confidential)
+  force_pkce
+
+  # Access token expiration
+  access_token_expires_in 20.seconds
+
+  # Enable refresh tokens
+  use_refresh_token
+
+  # Grant flows
   grant_flows %w[authorization_code client_credentials]
 
   # Allows to restrict only certain scopes for grant_type.
