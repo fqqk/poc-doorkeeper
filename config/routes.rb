@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  # Mount Doorkeeper routes at /oauth
   use_doorkeeper
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
